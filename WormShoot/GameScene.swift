@@ -8,38 +8,50 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+
+let wallMask:UInt32 = 0x1 << 0 // 1
+let ballMask:UInt32 = 0x1 << 1 // 2
+let pegMask:UInt32 = 0x1 << 2 // 4
+let squareMask:UInt32 = 0x1 << 3 // 8
+let orangePegMask:UInt32 = 0x1 << 4 // 16
+
+class GameScene: SKScene, SKPhysicsContactDelegate {
+    
+    var cannon: SKSpriteNode!
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!"
-        myLabel.fontSize = 45
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
         
-        self.addChild(myLabel)
+        cannon = self.childNodeWithName("cannon_full") as! SKSpriteNode
+        
+        self.physicsWorld.contactDelegate = self
+            
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
+        let ball:SKSpriteNode = SKScene(fileNamed: "Ball")?.childNodeWithName("ball") as! SKSpriteNode
+        ball.removeFromParent()
+        ball.zPosition = 0
+        ball.position = cannon.position
+        self.addChild(ball)
         
-        for touch in touches {
-            let location = touch.locationInNode(self)
-            
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-            
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
-        }
+        
+        let vx: CGFloat = CGFloat(0.0)
+        let vy: CGFloat = CGFloat(100.0)
+        ball.physicsBody?.applyImpulse(CGVectorMake(vx, vy))
+        
     }
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        
+        
+        
+        
+    }
+    
+    func didBeginContact(contact: SKPhysicsContact) {
+        print("contact!")
     }
 }
