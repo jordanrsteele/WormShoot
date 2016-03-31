@@ -21,48 +21,93 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var peg1: SKSpriteNode!
     var peg2: SKSpriteNode!
     
+    //global array of shapes
+    var circleArray:[SKShapeNode] = [SKShapeNode]()
+    var spriteArray:[SKSpriteNode] = [SKSpriteNode]()
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         
-        cannon = self.childNodeWithName("cannon_full") as! SKSpriteNode
         
         self.physicsWorld.contactDelegate = self
+        cannon = self.childNodeWithName("cannon_full") as! SKSpriteNode
         
+        
+        //code for making array array of green circles falling 
+        //uses theCircle() function
+        for var i=0; i < 10; i++ {
+            circleArray.append(SKShapeNode(circleOfRadius: 25))
+        }
+        theCircle()
+        // end of green circles
+        //
+        //
+        
+        
+        
+        
+        
+        
+        // code to make nodes move back and forth
         peg1 = self.childNodeWithName("peg1") as! SKSpriteNode
         peg2 = self.childNodeWithName("peg2") as! SKSpriteNode
-        
         let moveRight = SKAction.moveByX(800.0, y: 0.0, duration: 3.0)
         let moveLeft = SKAction.moveByX(-800.0, y: 0.0, duration: 3.0)
-        
         let seq = SKAction.sequence([moveRight, moveLeft])
-        
         peg1.runAction(SKAction.repeatActionForever(seq))
         peg2.runAction(SKAction.repeatActionForever(seq))
             
     }
     
+    
+    //func makeSprites()
+    
+    func theCircle(){
+        
+        var numCircle = 0
+        var initialy = CGFloat(1920)
+        var initialx = CGFloat(1000)
+        
+        while numCircle < circleArray.count {
+            let circleNode = circleArray[numCircle]
+            
+            circleNode.strokeColor = UIColor.whiteColor()
+            circleNode.fillColor = UIColor.greenColor()
+            
+            let initialposition = CGPoint(x: initialx, y: initialy)
+            circleNode.position = initialposition
+            
+            let ourVector = CGVectorMake(-2000, 0.0)
+            
+            let action1 = SKAction.moveBy(ourVector, duration: 5)
+            let action2 = SKAction.removeFromParent()
+            circleNode.runAction(SKAction.sequence([action1, action2]))
+            
+            self.addChild(circleNode)
+            initialx = initialx + 100
+            //initialy = initialy - 100
+            
+            numCircle++
+        }
+    }
+    
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
         let ball:SKSpriteNode = SKScene(fileNamed: "Ball")?.childNodeWithName("ball") as! SKSpriteNode
-        
         
         ball.removeFromParent()
         ball.zPosition = 0
         ball.position = cannon.position
         self.addChild(ball)
         
-        
         let vx: CGFloat = CGFloat(0.0)
-        let vy: CGFloat = CGFloat(100.0)
+        let vy: CGFloat = CGFloat(150.0)
         ball.physicsBody?.applyImpulse(CGVectorMake(vx, vy))
         
         ball.physicsBody?.collisionBitMask = wallMask | ballMask | pegMask | orangePegMask
         
         ball.physicsBody?.contactTestBitMask = ball.physicsBody!.collisionBitMask | squareMask
-        
-        
-        
-        
         
     }
     
@@ -78,7 +123,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Called before each frame is rendered */
         
         
-        
+    
         
     }
     
