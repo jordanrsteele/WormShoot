@@ -19,12 +19,12 @@ let snakeMask:UInt = 0x01 << 5 // 32
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var cannon: SKSpriteNode!
-    var sprite: SKSpriteNode!
+    //var sprite: SKSpriteNode!
     var peg1: SKSpriteNode!
     
     //global array of shapes
-    var circleArray:[SKShapeNode] = [SKShapeNode]()
-    var spriteArray:[SKSpriteNode] = [SKSpriteNode]()
+    var initialy = CGFloat(1920)
+    var snakeLength = 10
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -32,75 +32,53 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         cannon = self.childNodeWithName("cannon_full") as! SKSpriteNode
         
-        //code for making array array of green circles falling 
-        //uses theCircle() function
         
+        let wait = SKAction .waitForDuration(10, withRange: 0.5)
         
-        
-        
-        
-        for var i=0; i < 10; i++ {
-            let snakeNode:SKSpriteNode = SKScene(fileNamed: "SnakeNode")?.childNodeWithName("snakeNode") as! SKSpriteNode
+        let spawn = SKAction.runBlock({
             
-            snakeNode.removeFromParent()
-            snakeNode.zPosition = 0
+            self.spawnSnake()
             
-            
-            spriteArray.append(snakeNode)
-        }
-
+        })
         
-        theSprite()
+        let spawning = SKAction.sequence([spawn, wait])
         
+        self.runAction(SKAction.repeatActionForever(spawning), withKey:"spawning")
         
         
         
-        /* code to make nodes move back and forth
-        peg1 = self.childNodeWithName("peg1") as! SKSpriteNode
-        peg2 = self.childNodeWithName("peg2") as! SKSpriteNode
-        let moveRight = SKAction.moveByX(800.0, y: 0.0, duration: 3.0)
-        let moveLeft = SKAction.moveByX(-800.0, y: 0.0, duration: 3.0)
-        let seq = SKAction.sequence([moveRight, moveLeft])
-        peg1.runAction(SKAction.repeatActionForever(seq))
-        peg2.runAction(SKAction.repeatActionForever(seq))
-        */
     }
     
-    func theSprite(){
+    func spawnSnake(){
         
+        var spriteArray:[SKSpriteNode] = [SKSpriteNode]()
         var numSprite = 0
-        var initialy = CGFloat(1920)
         var initialx = CGFloat(1000)
         
-        while numSprite < spriteArray.count {
+        for numSprite = 0; numSprite < snakeLength; numSprite++ {
+            let snakeNode:SKSpriteNode = SKScene(fileNamed: "SnakeNode")?.childNodeWithName("snakeNode") as! SKSpriteNode
+            snakeNode.removeFromParent()
+            snakeNode.zPosition = 0
+            spriteArray.append(snakeNode)
+        
+        
             let spriteNode = spriteArray[numSprite]
-            
-            
             spriteNode.zPosition = 0
-            
-            /*
-            spriteNode.physicsBody?.affectedByGravity = false
-            spriteNode.physicsBody?.allowsRotation = false
-            spriteNode.physicsBody?.pinned = false
-            spriteNode.physicsBody?.affectedByGravity = false
-            */
-            
             let initialposition = CGPoint(x: initialx, y: initialy)
             spriteNode.position = initialposition
-            
             let ourVector = CGVectorMake(-2000, 0.0)
-            let action1 = SKAction.moveBy(ourVector, duration: 5)
+            let action1 = SKAction.moveBy(ourVector, duration: 10)
             let action2 = SKAction.removeFromParent()
             spriteNode.runAction(SKAction.sequence([action1, action2]))
             
             self.addChild(spriteNode)
             initialx = initialx + 100
-            //initialy = initialy - 100
+            print(numSprite)
             
-            numSprite++
         }
+        
+        initialy = initialy - 100
     }
-    
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
@@ -130,7 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Called before each frame is rendered */
         
         
-    
+        
         
     }
     
@@ -143,6 +121,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if other.categoryBitMask == pegMask || other.categoryBitMask == orangePegMask {
             self.didHitPeg(other)
+            ball.node?.removeFromParent()
         }
         else if other.categoryBitMask == squareMask {
             print("hit square!")
@@ -164,5 +143,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         spark.particleColor = (peg.categoryBitMask == orangePegMask) ? orange : blue
         self.addChild(spark)
         peg.node?.removeFromParent()
+        snakeLength--
     }
 }
