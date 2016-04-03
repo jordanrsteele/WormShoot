@@ -16,6 +16,8 @@
 		401F3C331CA734A3003B0692 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 401F3C311CA734A3003B0692 /* LaunchScreen.storyboard */; };
 		401F3C3E1CA734A3003B0692 /* WormShootTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401F3C3D1CA734A3003B0692 /* WormShootTests.swift */; };
 		401F3C491CA74601003B0692 /* Ball.sks in Resources */ = {isa = PBXBuildFile; fileRef = 401F3C481CA74601003B0692 /* Ball.sks */; };
+		406590CA1CB0D760004F63E7 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 406590C91CB0D760004F63E7 /* MainMenu.sks */; };
+		406590CC1CB0DC01004F63E7 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406590CB1CB0DC01004F63E7 /* MainMenu.swift */; };
 		40721B5A1CA9DFD1009DD584 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40721B591CA9DFD1009DD584 /* Assets.xcassets */; };
 		40721B5D1CA9F3F1009DD584 /* SparkParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 40721B5B1CA9F3F1009DD584 /* SparkParticle.sks */; };
 		40721B5E1CA9F3F1009DD584 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 40721B5C1CA9F3F1009DD584 /* spark.png */; };
@@ -45,6 +47,8 @@
 		401F3C3D1CA734A3003B0692 /* WormShootTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WormShootTests.swift; sourceTree = "<group>"; };
 		401F3C3F1CA734A3003B0692 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		401F3C481CA74601003B0692 /* Ball.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Ball.sks; sourceTree = "<group>"; };
+		406590C91CB0D760004F63E7 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
+		406590CB1CB0DC01004F63E7 /* MainMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		40721B591CA9DFD1009DD584 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40721B5B1CA9F3F1009DD584 /* SparkParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SparkParticle.sks; sourceTree = "<group>"; };
 		40721B5C1CA9F3F1009DD584 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
@@ -94,6 +98,8 @@
 				4018D0DA1CADBE0000548A62 /* SnakeNode.sks */,
 				401F3C261CA734A3003B0692 /* GameScene.sks */,
 				401F3C281CA734A3003B0692 /* GameScene.swift */,
+				406590C91CB0D760004F63E7 /* MainMenu.sks */,
+				406590CB1CB0DC01004F63E7 /* MainMenu.swift */,
 				401F3C2A1CA734A3003B0692 /* GameViewController.swift */,
 				401F3C2C1CA734A3003B0692 /* Main.storyboard */,
 				401F3C311CA734A3003B0692 /* LaunchScreen.storyboard */,
@@ -196,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				401F3C271CA734A3003B0692 /* GameScene.sks in Resources */,
+				406590CA1CB0D760004F63E7 /* MainMenu.sks in Resources */,
 				40721B5D1CA9F3F1009DD584 /* SparkParticle.sks in Resources */,
 				401F3C331CA734A3003B0692 /* LaunchScreen.storyboard in Resources */,
 				40721B5E1CA9F3F1009DD584 /* spark.png in Resources */,
@@ -223,6 +230,7 @@
 				401F3C291CA734A3003B0692 /* GameScene.swift in Sources */,
 				401F3C2B1CA734A3003B0692 /* GameViewController.swift in Sources */,
 				401F3C251CA734A3003B0692 /* AppDelegate.swift in Sources */,
+				406590CC1CB0DC01004F63E7 /* MainMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

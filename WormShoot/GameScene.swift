@@ -24,27 +24,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //global array of shapes
     var initialy = CGFloat(1920)
-    var snakeLength = 10
+    var velocity = CGFloat(-2000)
+    var snakeLength = 20
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        
         self.physicsWorld.contactDelegate = self
         cannon = self.childNodeWithName("cannon_full") as! SKSpriteNode
         
-        
         let wait = SKAction .waitForDuration(10, withRange: 0.5)
-        
         let spawn = SKAction.runBlock({
-            
             self.spawnSnake()
-            
         })
-        
         let spawning = SKAction.sequence([spawn, wait])
-        
         self.runAction(SKAction.repeatActionForever(spawning), withKey:"spawning")
-        
         
         
     }
@@ -55,20 +48,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var numSprite = 0
         var initialx = CGFloat(1000)
         
+        
         for numSprite = 0; numSprite < snakeLength; numSprite++ {
             let snakeNode:SKSpriteNode = SKScene(fileNamed: "SnakeNode")?.childNodeWithName("snakeNode") as! SKSpriteNode
             snakeNode.removeFromParent()
-            snakeNode.zPosition = 0
             spriteArray.append(snakeNode)
-        
         
             let spriteNode = spriteArray[numSprite]
             spriteNode.zPosition = 0
             let initialposition = CGPoint(x: initialx, y: initialy)
-            spriteNode.position = initialposition
-            let ourVector = CGVectorMake(-2000, 0.0)
+            
+            let ourVector = CGVectorMake(velocity, 0.0)
             let action1 = SKAction.moveBy(ourVector, duration: 10)
             let action2 = SKAction.removeFromParent()
+            spriteNode.position = initialposition
             spriteNode.runAction(SKAction.sequence([action1, action2]))
             
             self.addChild(spriteNode)
@@ -76,8 +69,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print(numSprite)
             
         }
-        
         initialy = initialy - 100
+        velocity = velocity - 600
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -91,29 +84,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let vx: CGFloat = CGFloat(0.0)
         let vy: CGFloat = CGFloat(150.0)
+        
         ball.physicsBody?.applyImpulse(CGVectorMake(vx, vy))
-        
         ball.physicsBody?.collisionBitMask = wallMask | ballMask | pegMask | orangePegMask
-        
         ball.physicsBody?.contactTestBitMask = ball.physicsBody!.collisionBitMask | squareMask
-        
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         
     }
+    
+    override func didSimulatePhysics() {
+        //runs after all physics actions are complete 
+    }
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        
-        
-        
-        
+        if(initialy < 500.0){
+            self.removeActionForKey("spawning")
+            print("game over!")
+        }
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
-        
         
         let ball = (contact.bodyA.categoryBitMask == ballMask) ? contact.bodyA : contact.bodyB
         
