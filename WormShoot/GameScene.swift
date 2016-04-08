@@ -23,7 +23,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var peg1: SKSpriteNode!
     
     //global array of shapes
-    var initialy = CGFloat(1920)
+    var initialy = CGFloat(1890)
     var velocity = CGFloat(-2000)
     var snakeLength = 20
     
